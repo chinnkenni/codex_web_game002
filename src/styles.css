@@ -619,11 +619,12 @@ button:disabled {
 
 .board-section {
   position: relative;
+  container-type: size;
   flex: 1 1 0;
   min-height: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  justify-items: center;
   padding: 8px;
   border: 1px solid rgba(214, 173, 104, 0.34);
   background:
@@ -758,12 +759,17 @@ button:disabled {
 .memory-board {
   position: relative;
   isolation: isolate;
-  flex: 0 0 auto;
+  align-self: start;
+  justify-self: center;
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   grid-template-rows: repeat(6, minmax(0, 1fr));
   gap: 4px;
-  width: min(100%, 360px);
+  width: auto;
+  height: min(100%, 432px);
+  height: min(calc(100cqh - 29px), 432px, 120cqw);
+  max-width: 100%;
+  max-height: 100%;
   min-height: 0;
   aspect-ratio: 5 / 6;
   overflow: hidden;
@@ -2977,6 +2983,147 @@ button:disabled {
 }
 
 @media (max-height: 700px) {
+  .app-shell {
+    gap: 5px;
+    padding-block: 8px max(8px, env(safe-area-inset-bottom));
+  }
+
+  .status-bar {
+    grid-template-rows: 52px;
+    height: 52px;
+    min-height: 52px;
+  }
+
+  .status-metric strong {
+    font-size: 18px;
+  }
+
+  .icon-button {
+    min-height: 52px;
+  }
+
+  .title-row {
+    grid-template-columns: minmax(0, 1fr) minmax(184px, 210px);
+    gap: 6px;
+    padding: 0;
+  }
+
+  .title-row h1 {
+    font-size: 24px;
+  }
+
+  .title-row p {
+    margin-top: 2px;
+    font-size: 14px;
+  }
+
+  .interference-panel {
+    min-height: 50px;
+    padding: 6px 8px;
+  }
+
+  .interference-panel > div:last-child {
+    gap: 5px;
+  }
+
+  .interference-stat + .interference-stat {
+    padding-top: 5px;
+  }
+
+  .interference-stat strong {
+    font-size: 18px;
+  }
+
+  .notice-bar {
+    flex-basis: 30px;
+    min-height: 30px;
+    max-height: 30px;
+    padding: 5px 8px;
+    font-size: 12px;
+  }
+
+  .board-section {
+    padding: 6px;
+  }
+
+  .progress-row {
+    grid-template-columns: minmax(0, 112px) minmax(80px, 1fr) 42px;
+    gap: 6px;
+    min-height: 16px;
+    margin-bottom: 5px;
+    font-size: 12px;
+  }
+
+  .memory-board {
+    gap: 3px;
+    height: min(100%, 432px);
+    height: min(calc(100cqh - 23px), 432px, 120cqw);
+    padding: 3px;
+  }
+
+  .action-dock {
+    gap: 5px;
+    padding: 5px;
+  }
+
+  .dock-group {
+    padding: 4px;
+  }
+
+  .dock-title {
+    margin-bottom: 5px;
+    font-size: 13px;
+  }
+
+  .skill-slots {
+    gap: 4px;
+  }
+
+  .skill-button,
+  .merchant-card {
+    min-height: 54px;
+    gap: 2px;
+    padding: 5px 3px 4px;
+  }
+
+  .skill-button svg,
+  .merchant-card svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .skill-button strong,
+  .merchant-card strong {
+    font-size: 12px;
+  }
+
+  .skill-button small,
+  .merchant-card small {
+    font-size: 10px;
+  }
+
+  .skill-state,
+  .merchant-count {
+    top: 4px;
+    right: 5px;
+    font-size: 10px;
+  }
+
+  .route-strip {
+    padding: 6px;
+  }
+
+  .route-nodes {
+    gap: 5px;
+  }
+
+  .route-node {
+    grid-template-columns: 20px minmax(0, 1fr);
+    min-height: 38px;
+    gap: 5px;
+    padding: 5px;
+  }
+
   .start-page {
     gap: 8px;
     grid-template-rows: auto minmax(0, 1fr) auto;

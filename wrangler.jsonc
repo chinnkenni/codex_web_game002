@@ -1,5 +1,24 @@
 {
-  "name": "game002",
-  "pages_build_output_dir": "./dist",
-  "compatibility_date": "2026-06-19"
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "codex-web-game002",
+  "main": "./src/worker.js",
+  "compatibility_date": "2026-06-20",
+  "workers_dev": true,
+  "routes": [
+    {
+      "pattern": "game002.withkeni.com",
+      "custom_domain": true
+    }
+  ],
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application"
+  },
+  "observability": {
+    "enabled": true,
+    "logs": {
+      "enabled": true
+    }
+  }
 }

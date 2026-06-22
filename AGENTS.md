@@ -60,6 +60,8 @@ A run should support three clear styles: strong Build control, fast hand speed, 
 
 The bottom dock should match the reference structure: left side shows run Build skills, and the right side keeps a visible merchant item card. Board utility cards should either resolve immediately or provide energy that charges Build skills; merchant items remain separate purchasable props.
 
+During active play, the route strip must stay to a single horizontally scrollable row. It should not wrap to two rows or consume board height on mobile browsers. The current route position must be visually marked and quickly locatable after horizontal scrolling.
+
 Shop items are finite per shop visit. Once a merchant item is purchased, remove that corresponding row from the current shop list instead of allowing repeat purchases; prices should be shown as time costs such as `00:30`, not bare numbers.
 
 Route-choice screens should avoid empty panels. Present the available next nodes as large vertical cards with stronger atmosphere and clear hierarchy, rather than compact horizontal option tiles.

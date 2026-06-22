@@ -4583,6 +4583,7 @@ function BuildSkillButton({
 }
 
 function RouteStrip({ run }: { run: RunState }) {
+  const routeScrollerRef = useRef<HTMLDivElement>(null);
   const known = [
     { label: "起点", text: "梦境入口", icon: Sparkles, known: true },
     ...run.history.map((node) => ({
@@ -4595,26 +4596,54 @@ function RouteStrip({ run }: { run: RunState }) {
   const remaining = Math.max(0, 15 - run.layer);
   const visibleCount = Math.min(6, Math.max(known.length + Math.min(remaining, 6), 6));
   const unknownCount = Math.max(0, visibleCount - known.length);
+  const currentRouteIndex = Math.max(0, known.length - 1);
   const nodes = [
-    ...known,
-    ...Array.from({ length: unknownCount }, () => ({
+    ...known.map((node, routeIndex) => ({
+      ...node,
+      routeIndex,
+      current: routeIndex === currentRouteIndex,
+    })),
+    ...Array.from({ length: unknownCount }, (_, index) => ({
       label: "未揭示",
       text: "待选择",
       icon: Circle,
       known: false,
+      routeIndex: known.length + index,
+      current: false,
     })),
   ].slice(-6);
+  const currentVisibleIndex = nodes.findIndex((node) => node.current);
+
+  function scrollCurrentIntoView(behavior: ScrollBehavior = "smooth") {
+    const currentNode = routeScrollerRef.current?.querySelector<HTMLElement>("[data-current-route='true']");
+    currentNode?.scrollIntoView({ behavior, block: "nearest", inline: "center" });
+  }
+
+  useEffect(() => {
+    scrollCurrentIntoView("auto");
+  }, [run.history.length, run.layer, currentVisibleIndex]);
+
   return (
     <section className="route-strip">
-      <div className="dock-title">梦境路线</div>
-      <div className="route-nodes">
+      <button
+        className="dock-title route-locate-button"
+        type="button"
+        aria-label="定位到当前路线位置"
+        onClick={() => scrollCurrentIntoView()}
+      >
+        梦境路线
+      </button>
+      <div className="route-nodes" ref={routeScrollerRef}>
         {nodes.map((node, index) => {
           const Icon = node.icon;
           return (
             <div
-              className={["route-node", node.known ? "is-done" : "is-unknown"].join(" ")}
-              key={`${node.label}-${index}`}
+              className={["route-node", node.known ? "is-done" : "is-unknown", node.current ? "is-current" : ""].join(" ")}
+              aria-current={node.current ? "step" : undefined}
+              data-current-route={node.current ? "true" : undefined}
+              key={`${node.routeIndex}-${node.label}-${index}`}
             >
+              {node.current && <b className="route-current-badge">当前</b>}
               <Icon size={21} strokeWidth={1.5} />
               <span>
                 <strong>{node.label}</strong>

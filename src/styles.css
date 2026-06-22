@@ -2206,28 +2206,72 @@ button:disabled {
 
 .route-strip {
   flex: 0 0 auto;
-  padding-bottom: 10px;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 7px;
+  align-items: center;
+  padding: 6px;
+  overflow: hidden;
+}
+
+.route-strip .dock-title {
+  align-self: stretch;
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+  min-width: 58px;
+  margin-bottom: 0;
+  padding: 0 7px;
+  border: 1px solid rgba(214, 173, 104, 0.28);
+  background: rgba(3, 11, 18, 0.42);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.route-locate-button {
+  color: var(--gold-300);
+  box-shadow: inset 0 0 14px rgba(244, 220, 168, 0.05);
+}
+
+.route-locate-button:active {
+  color: #dfffff;
+  border-color: rgba(111, 227, 237, 0.62);
+  background:
+    radial-gradient(circle at 50% 18%, rgba(111, 227, 237, 0.12), transparent 42%),
+    rgba(4, 16, 24, 0.62);
 }
 
 .route-nodes {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 7px;
+  display: flex;
+  min-width: 0;
+  gap: 5px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.route-nodes::-webkit-scrollbar {
+  display: none;
 }
 
 .route-node {
   position: relative;
+  flex: 0 0 108px;
   display: grid;
-  grid-template-columns: 24px minmax(0, 1fr);
-  min-height: 46px;
+  grid-template-columns: 20px minmax(0, 1fr);
+  min-height: 38px;
   align-items: center;
-  gap: 6px;
-  padding: 7px;
+  gap: 5px;
+  padding: 5px 6px;
   border: 1px solid rgba(214, 173, 104, 0.34);
   color: rgba(235, 210, 164, 0.7);
   background:
     radial-gradient(circle at 0% 50%, rgba(244, 220, 168, 0.08), transparent 46%),
     rgba(5, 15, 24, 0.76);
+  scroll-snap-align: start;
 }
 
 .route-node::after {
@@ -2242,6 +2286,35 @@ button:disabled {
     0 0 12px rgba(92, 218, 232, 0.16);
 }
 
+.route-node.is-current {
+  color: #dfffff;
+  border-color: rgba(244, 220, 168, 0.88);
+  background:
+    radial-gradient(circle at 12% 50%, rgba(111, 227, 237, 0.2), transparent 42%),
+    linear-gradient(90deg, rgba(15, 64, 76, 0.86), rgba(6, 22, 31, 0.84));
+  box-shadow:
+    inset 0 0 0 1px rgba(111, 227, 237, 0.32),
+    inset 0 0 18px rgba(111, 227, 237, 0.15),
+    0 0 12px rgba(244, 220, 168, 0.2);
+}
+
+.route-current-badge {
+  position: absolute;
+  top: 3px;
+  right: 4px;
+  max-width: 34px;
+  overflow: hidden;
+  padding: 1px 4px;
+  color: #021018;
+  background: linear-gradient(90deg, #84ecf2, #f4dca8);
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 1.05;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  box-shadow: 0 0 8px rgba(111, 227, 237, 0.24);
+}
+
 .route-node.is-unknown {
   color: rgba(239, 213, 166, 0.42);
   border-color: rgba(166, 135, 83, 0.34);
@@ -2250,6 +2323,8 @@ button:disabled {
 }
 
 .route-node svg {
+  width: 18px;
+  height: 18px;
   justify-self: center;
   color: currentColor;
 }
